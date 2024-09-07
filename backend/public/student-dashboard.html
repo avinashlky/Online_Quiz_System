@@ -1,0 +1,103 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+</head>
+<body>
+  <h1>Student Dashboard</h1>
+  <div id="quiz-section">
+    
+  </div>
+
+  <script>
+    async function loadQuiz() {
+      const response = await fetch('/api/questions', {
+        headers: {
+          'Authorization': localStorage.getItem('token') // Student token
+        }
+      });
+
+      if (response.ok) {
+        const questions = await response.json();
+        const quizSection = document.getElementById('quiz-section');
+
+        questions.forEach(question => {
+          const questionDiv = document.createElement('div');
+          questionDiv.innerHTML = `
+            <h3>${question.text}</h3>
+            ${question.options.map((opt, i) => `
+              <label>
+                <input type="radio" name="q${question._id}" value="${opt}">
+                ${opt}
+              </label><br>
+            `).join('')}
+            <button onclick="submitAnswer('${question._id}')">Submit Answer</button>
+            <hr>
+          `;
+          quizSection.appendChild(questionDiv);
+        });
+      }
+    }
+
+    async function submitAnswer(questionId) {
+      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
+      if (!selectedOption) {
+        alert('Please select an answer');
+        return;
+      }
+
+      const answer = selectedOption.value;
+      const response = await fetch(`/api/questions/${questionId}/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token')
+        },
+        body: JSON.stringify({ answer })
+      });
+
+      if (response.ok) {
+        alert('Answer submitted successfully!');
+      } else {
+        alert('Failed to submit the answer.');
+      }
+    }
+
+    loadQuiz();
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Online Quiz System</h1>
+    </header>
+    <div class="dashboard-container">
+        <h2>Student Dashboard</h2>
+        <!-- Example content -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Options</th>
+                    <th>Answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populate with questions -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

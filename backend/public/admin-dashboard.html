@@ -1,0 +1,105 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+  <form id="post-question-form">
+    <h2>Post a New Question</h2>
+    <label for="question">Question:</label>
+    <input type="text" id="question" name="question" required>
+    <br>
+    <label for="options">Options (comma-separated):</label>
+    <input type="text" id="options" name="options" required>
+    <br>
+    <label for="answer">Answer:</label>
+    <input type="text" id="answer" name="answer" required>
+    <br>
+    <button type="submit">Post Question</button>
+  </form>
+  
+  <script>
+    document.getElementById('post-question-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const question = document.getElementById('question').value;
+      const options = document.getElementById('options').value.split(',');
+      const answer = document.getElementById('answer').value;
+
+      const response = await fetch('/api/questions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token') // Admin token
+        },
+        body: JSON.stringify({ question, options, answer })
+      });
+
+      if (response.ok) {
+        alert('Question posted successfully!');
+      } else {
+        alert('Failed to post the question.');
+      }
+    });
+  </script>
+</body>
+</html> -->
+
+
+<!-- admin.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <h2>Post a Question</h2>
+    <form id="postQuestionForm">
+        <label for="question">Question:</label>
+        <input type="text" id="question" name="question" required>
+        <br><br>
+        <label for="optionA">Option A:</label>
+        <input type="text" id="optionA" name="optionA" required>
+        <br><br>
+        <label for="optionB">Option B:</label>
+        <input type="text" id="optionB" name="optionB" required>
+        <br><br>
+        <label for="optionC">Option C:</label>
+        <input type="text" id="optionC" name="optionC" required>
+        <br><br>
+        <label for="optionD">Option D:</label>
+        <input type="text" id="optionD" name="optionD" required>
+        <br><br>
+        <label for="answer">Correct Answer:</label>
+        <input type="text" id="answer" name="answer" required>
+        <br><br>
+        <button type="submit">Submit Question</button>
+    </form>
+
+    <script>
+        document.getElementById('postQuestionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            const response = await fetch('/api/questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                alert('Question posted successfully!');
+            } else {
+                alert('Failed to post the question.');
+            }
+        });
+    </script>
+</body>
+</html>
